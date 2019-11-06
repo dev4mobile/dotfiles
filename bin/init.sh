@@ -23,6 +23,7 @@ fi
 #ln -sf $DOTFILE_DIR/ssh/.ssh $HOME/.ssh
 #ln -sf $DOTFILE_DIR/zsh/.zshrc $HOME/.zshrc
 #ln -sf $DOTFILE_DIR/vim/.vimrc $HOME/.vimrc
+#ln -sf $DOTFILE_DIR/vim/.gitconfig $HOME/.gitconfig
 
 for file in `ls $DOTFILE_DIR`; do
   if [[ $file = "iTerm2" || $file = "README.md" ]]; then

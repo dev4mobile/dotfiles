@@ -1,0 +1,26 @@
+[user]
+	name = dev4mobile
+	email = cn.dev4mobile@gmail.com
+
+[alias]
+	co = checkout
+	ec = config --global -e
+	cob = checkout -b
+	wip = !git add -u && git commit -m WIP
+	lg = log --graph
+        st = status
+        br = branch
+	save = !git add -A && git commit -m 'SAVEPOINT'
+	editor = /usr/bin/vim	
+        wtf = !git commit -m \"$(curl -L -s https://commitlog.wolege.ca)\"
+	lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+[color]
+	ui = auto 
+
+[help]
+	autocorrect = 1
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
