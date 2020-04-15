@@ -6,10 +6,10 @@ if [ -z $DEV ]; then
   export DEV=$HOME/develop
 fi
 
-DOTFILE_DIR=$DEV/dotfiles
+DOTFILE_DIR=$DEV/config/dotfiles
 
 if [ ! -d $DOTFILE_DIR ]; then
-  echo "dotfiles is not in $HOME/develop"
+  echo "dotfiles is not in $HOME/develop/config"
   exit 2
 fi
 

@@ -19,11 +19,11 @@ ZSH_THEME="robbyrussell"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+#CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -38,10 +38,10 @@ CASE_SENSITIVE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -64,7 +64,7 @@ CASE_SENSITIVE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git z extract zsh-autosuggestions osx brew npm docker tmux fzf navi iterm2
+  git z extract zsh-autosuggestions osx brew npm docker tmux fzf iterm2
 )
 
 prepend() { [ -d "$2" ] && eval $1=\"$2':'\$$1\" && export $1; }
@@ -102,7 +102,9 @@ source $ZSH/oh-my-zsh.sh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "/Users/dev4mobile/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/dev4mobile/.sdkman/bin/sdkman-init.sh"
+SDKMAN_INIT_SCRIPT="${SDKMAN_DIR}/bin/sdkman-init.sh"
+
+[[ -s "$SDKMAN_INIT_SCRIPT" ]] && source "$SDKMAN_INIT_SCRIPT"
 
 #ENV
 export DEV="$HOME/develop"
@@ -115,10 +117,10 @@ prepend PATH $JAVA_HOME/bin
 
 #Android
 export ANDROID_HOME=~/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools/28.0.2
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools/28.0.3
 
 #Cmake
-export PATH=$PATH:$ANDROID_HOME/cmake/3.6.4111459/bin
+export PATH=$PATH:$ANDROID_HOME/cmake/3.10.2.4988404/bin
 
 #Ndk
 export NDK=$ANDROID_HOME/ndk-bundle
@@ -133,9 +135,6 @@ export GRADLE_USER_HOME=~/.gradle
 #flutter
 export FLUTTER_ROOT=~/Library/flutter
 export PATH=$PATH:$FLUTTER_ROOT/bin
-
-#autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 #go develop dir
 export GO111MODULE=on
@@ -170,12 +169,8 @@ function proxy_off() {
   curl ip.gs
 }
 
-#ifconfig | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1' | sed '1 d' | head -n1
 function proxy_on() {
-  ip="ifconfig | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1' | sed '1 d' | head -n1"
-  b=eval $ip	
-  echo $b 
-  export http_proxy='http://127.0.0.1:1087'
+  export http_proxy='http://127.0.0.1:1079'
   export https_proxy=$http_proxy
   echo -e "[proxy on]"
   curl ip.gs
@@ -184,9 +179,10 @@ function proxy_on() {
 #chrome
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
-#python3
-alias python=/usr/local/bin/python3
-alias pip=/usr/local/bin/pip3
+#pyenv
+export PYENV_ROOR="$HOME/.pyenv"
+export PATH=$PYENV_ROOT/shims:$PATH
+eval "$(pyenv init -)"
 
 #git
 git_prompt_stash() {
@@ -195,9 +191,6 @@ git_prompt_stash() {
   fi
 }
 RPROMPT="$(git_prompt_stash)"
-
-# navi
-source "$(navi widget zsh)"
 
 #cargo
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -208,4 +201,8 @@ alias company="cd $DEV/company"
 alias dev="cd $DEV"
 
 #thefuck
-eval $(thefuck --alias f)
+eval $(thefuck --alias)
+
+#jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
